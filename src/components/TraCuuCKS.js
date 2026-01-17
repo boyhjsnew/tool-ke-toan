@@ -96,22 +96,22 @@ const TraCuuCKS = () => {
           const { traCuuCKS } = await import("../services/cksService");
           const data = await traCuuCKS(mst);
           if (data.data && data.data.length > 0) {
-            ketQua.push(...data.data);
-          } else {
-            ketQua.push({
-              ms_thue: mst,
-              ngay_kichhoat: null,
-              thanhtien: null,
+            // Chỉ lấy những item có ten_trangthai = "Đã kích hoạt" hoặc có ngay_kichhoat
+            const filteredData = data.data.filter((item) => {
+              const hasTrangThai = item.ten_trangthai === "Đã kích hoạt";
+              const hasNgayKichHoat = item.ngay_kichhoat !== null && item.ngay_kichhoat !== undefined;
+              return hasTrangThai || hasNgayKichHoat;
             });
+            
+            if (filteredData.length > 0) {
+              ketQua.push(...filteredData);
+            }
+            // Nếu không có item nào thỏa điều kiện, không thêm vào kết quả
           }
+          // Nếu không có data, không thêm vào kết quả
         } catch (err) {
           console.error(`Lỗi tra cứu MST ${mst}:`, err);
-          ketQua.push({
-            ms_thue: mst,
-            ngay_kichhoat: null,
-            thanhtien: null,
-            error: err.message,
-          });
+          // Không thêm vào kết quả khi có lỗi
         }
       }
 

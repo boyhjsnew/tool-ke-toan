@@ -189,6 +189,7 @@ const TraCuuCKS = () => {
           "TÊN CTY": item.ten_kh || "",
           "GÓI": item.ten_goicuoc || "",
           "Tổng tiền": item.thanhtien ? Number(item.thanhtien) : null,
+          "Ghi chú": item.ghi_chu || "",
         };
       });
 
@@ -203,6 +204,7 @@ const TraCuuCKS = () => {
         { wch: 40 }, // TÊN CTY
         { wch: 50 }, // GÓI
         { wch: 15 }, // Tổng tiền
+        { wch: 30 }, // Ghi chú
       ];
 
       // Freeze header row (dòng đầu tiên)
